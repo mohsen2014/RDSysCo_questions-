@@ -36,35 +36,42 @@ statistics.printGuessStatisticsOneMorePerson("bird", 2);
 /*
 *There are 2 birds
 */
-class Calculator{
-  add(x, y) { return x + y; }
-  sub(x, y) { return x - y; }
-   mul(x, y) { return x * y; }
-   div(x, y) { return x / y; }
+class Calculator {
 
+  constructor() {
+    this.undoCommand = false;
+    this.current = 0;
+    this.oprator = [];
+  }
+
+  _add(x, y) { return x + y; }
+  _sub(x, y) { return x - y; }
+  _mul(x, y) { return x * y; }
+  _div(x, y) { return x / y; }
+
+  add(value) {
+    return new Calculator(_add, _sub, value);
+  };
+
+  sub(value) {
+    return new Calculator(_sub, _add, value);
+  };
+
+  mul(value) {
+    return new Calculator(_mul, _div, value);
+  };
+
+  div(value) {
+    return new Calculator(div, mul, value);
+  };
+
+  runCommand(opr) {
+    current = command.runCommand(current, opr.value);
+    opr.push(opr);
+    console.log(action(command) + ": " + command.value);
+  }
 }
 
-var Command = function (execute, undo, value) {
-  this.execute = execute;
-  this.undo = undo;
-  this.value = value;
-}
-
-var AddCommand = function (value) {
-  return new Command(add, sub, value);
-};
-
-var SubCommand = function (value) {
-  return new Command(sub, add, value);
-};
-
-var MulCommand = function (value) {
-  return new Command(mul, div, value);
-};
-
-var DivCommand = function (value) {
-  return new Command(div, mul, value);
-};
 
 var Calculator = function () {
   var current = 0;
